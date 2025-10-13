@@ -6,13 +6,30 @@ import { z } from 'zod';
 export async function POST(req: Request) {
   const { messages } = await req.json();
 
+  const getFinnishDate = (daysOffset = 0) => {
+    const now = new Date();
+    const finnishTime = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Helsinki' }));
+    finnishTime.setDate(finnishTime.getDate() + daysOffset);
+    return `${finnishTime.getFullYear()}/${String(finnishTime.getMonth() + 1).padStart(2, '0')}/${String(finnishTime.getDate()).padStart(2, '0')}`;
+  };
+
   const tools = {
     date: tool({
-      description: 'Get the date',
+      description: 'Get the current date in Finnish time zone',
       inputSchema: z.object({}),
-      execute: async () => ({
-        text: new Date().toLocaleDateString('fi-FI'),
-      }),
+      execute: async () => {
+        const currentFinnishDate = getFinnishDate(0);
+        const finnishDateFormatted = new Date().toLocaleDateString('fi-FI', {
+          timeZone: 'Europe/Helsinki',
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          weekday: 'long',
+        });
+        return {
+          text: `${finnishDateFormatted} (${currentFinnishDate})`,
+        };
+      },
     }),
     getLunch: tool({
       description: 'Get lunch recommendations from lunchpaus.fi for Vaasa',
@@ -21,13 +38,8 @@ export async function POST(req: Request) {
       }),
       execute: async ({ date }) => {
         try {
-          const targetDate =
-            date ||
-            (() => {
-              const tomorrow = new Date();
-              tomorrow.setDate(tomorrow.getDate() + 1);
-              return `${tomorrow.getFullYear()}/${String(tomorrow.getMonth() + 1).padStart(2, '0')}/${String(tomorrow.getDate()).padStart(2, '0')}`;
-            })();
+          // Default to tomorrow's date if not provided, using Finnish time zone
+          const targetDate = date || getFinnishDate(1);
 
           const url = `https://www.lunchpaus.fi/Vasa/${targetDate}`;
 
@@ -122,7 +134,7 @@ export async function POST(req: Request) {
     system: `You are a helpful lunch assistant in Vaasa, Finland.
       Use the getLunch tool to provide lunch options when relevant.
       Only suggest a few options (1-3) and keep the response concise.
-      Don't use emojis. Translate dish names to user language.
+      Don't use emojis. Speak user language and translate dish names to user language.
       Always say what date you are fetching lunch for. Provide Google Maps
       links for addresses.`,
     messages: convertToModelMessages(messages),
