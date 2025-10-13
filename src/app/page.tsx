@@ -18,10 +18,9 @@ export default function Home() {
           <Chat />
         </div>
       </main>
-      <footer className="mb-20">
-        <Link className="underline" href="https://www.1hz.dev">
-          Made by 1hz
-        </Link>
+      <footer className="mb-20 flex flex-row gap-4">
+        <Link href="https://www.lunchpaus.fi">Data by Lunchpaus.fi</Link>
+        <Link href="https://www.1hz.dev">Developed by 1hz</Link>
       </footer>
     </div>
   );
