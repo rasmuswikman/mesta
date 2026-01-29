@@ -41,7 +41,7 @@ export async function POST(req: Request) {
           // Default to tomorrow's date if not provided, using Finnish time zone
           const targetDate = date || getFinnishDate(1);
 
-          const url = `https://www.lunchpaus.fi/Vasa/${targetDate}`;
+          const url = `https://www.lunchpaus.fi/Vaasa/${targetDate}`;
 
           const response = await fetch(url);
           if (!response.ok) {
@@ -137,7 +137,7 @@ export async function POST(req: Request) {
       Don't use emojis. Speak user language and translate dish names to user language.
       Always say what date you are fetching lunch for. Provide Google Maps
       links for addresses.`,
-    messages: convertToModelMessages(messages),
+    messages: await convertToModelMessages(messages),
     stopWhen: stepCountIs(3),
   });
 
