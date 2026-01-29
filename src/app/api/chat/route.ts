@@ -92,7 +92,7 @@ export async function POST(req: Request) {
               const addressElement = $element.find('.restaurant-info .address-point');
               const address = addressElement.length > 0 ? addressElement.text().trim() : '';
               const mapsUrl = address
-                ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address + ', Vaasa, Finland')}`
+                ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${address}, Vaasa, Finland`)}`
                 : '';
 
               restaurants.push({

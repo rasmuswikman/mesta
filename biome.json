@@ -47,5 +47,10 @@
       "quoteStyle": "single",
       "jsxQuoteStyle": "double"
     }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
   }
 }
