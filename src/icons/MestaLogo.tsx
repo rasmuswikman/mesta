@@ -6,7 +6,7 @@ interface Props extends React.HTMLAttributes<SVGElement> {
   fill?: string;
 }
 
-export default function MestaLogo({ title, fill = '#D97706', ...rest }: Props) {
+export default function MestaLogo({ title, fill = '#22C55E', ...rest }: Props) {
   const id = useId();
 
   return (

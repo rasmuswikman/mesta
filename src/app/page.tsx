@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div className="flex h-screen flex-col items-center justify-center">
       <main className="flex grow flex-col items-center justify-center">
-        <MestaLogo className="w-60" fill="#333" />
+        <MestaLogo className="w-60" />
         <div className="mt-10 w-full md:min-w-2xl">
           <Chat />
         </div>
