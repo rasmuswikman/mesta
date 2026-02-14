@@ -1,19 +1,12 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import Chat from '@/components/Chat';
+import MestaLogo from '@/icons/MestaLogo';
 
 export default function Home() {
   return (
     <div className="flex h-screen flex-col items-center justify-center">
-      <main className="flex grow-1 flex-col items-center justify-center">
-        <Image
-          alt="Mesta logo"
-          className="w-60"
-          height={114}
-          priority
-          src="/mesta-logo.svg"
-          width={300}
-        />
+      <main className="flex grow flex-col items-center justify-center">
+        <MestaLogo className="w-60" fill="#333" />
         <div className="mt-10 w-full md:min-w-2xl">
           <Chat />
         </div>
